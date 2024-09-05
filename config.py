@@ -32,4 +32,10 @@ class UvicornCfg(CfgBase):
     port: int = config.getint("UVICORN", "PORT")
 
 
+@dataclass
+class Elastic(CfgBase):
+    SERVER_ELASTIC_CONNECTION: str = config["ELASTIC"]["SERVER_ELASTIC_CONNECTION"]
+
+
 uvicorn = UvicornCfg()
+elastic = Elastic()
