@@ -1,0 +1,9 @@
+certifi
+elasticsearch
+numpy
+pandas
+psycopg2-binary
+python-dateutil
+pytz
+six
+urllib3
