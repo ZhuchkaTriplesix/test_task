@@ -1,12 +1,10 @@
-from sqlalchemy.orm import Session
-
 import services.postgres.models as models
 from services.elasticsearch.elastic import MyElastic
-
+from sqlalchemy.ext.asyncio import AsyncSession
 my_elastic = MyElastic()
 
 
-def search_post_by_text(db: Session, search_text: str):
+def _search_post_by_text(db: AsyncSession, search_text: str):
     ids_list = my_elastic.search_by_text(search_text)
     result = db.query(models.Post) \
         .filter(models.Post.id.in_(ids_list)) \
@@ -15,7 +13,7 @@ def search_post_by_text(db: Session, search_text: str):
     return result
 
 
-def delete_by_id(db: Session, id: int) -> bool:
+def _delete_by_id(db: AsyncSession, id: int) -> bool:
     delete_item = my_elastic.search_by_id(id)
     if delete_item is not None:
         elastic_result = my_elastic.delete_by_id(delete_item[0]["_id"])
